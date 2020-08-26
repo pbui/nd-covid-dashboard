@@ -3,9 +3,9 @@
 Scrapes the official [Notre Dame Covid-19 Dashboard] using [Requests] and
 [Tesseract].
 
-Periodically updated feed can be found here: [yld.me/raw/nd-covid-dashboard].
+Periodically updated feed can be found here: [yld.me/nd-covid-dashboard].
 
 [Notre Dame Covid-19 Dashboard]: https://here.nd.edu/our-approach/dashboard/
 [Requests]: https://requests.readthedocs.io/
 [Tesseract]: https://github.com/tesseract-ocr/tesseract
-[yld.me/raw/nd-covid-dashboard]: https://yld.me/raw/nd-covid-dashboard
+[yld.me/nd-covid-dashboard]: https://yld.me/nd-covid-dashboard
