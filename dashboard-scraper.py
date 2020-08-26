@@ -51,7 +51,7 @@ Notre Dame Covid Dashboard
 <item>
 <title>Covid Dashboard ({date}): Daily={data[0]}, Total={data[1]}, Tested={data[2]}</title>
 <author>pbui@nd.edu</author>
-<link>{DASHBOARD_URL}</link>
+<link>{DASHBOARD_URL}#{''.join([date] + list(data))}</link>
 <pubDate>{make_timestamp()}</pubDate>
 </item>
 </channel>
