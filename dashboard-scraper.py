@@ -14,7 +14,7 @@ import requests
 DASHBOARD_URL               = 'https://here.nd.edu/our-approach/dashboard/'
 DASHBOARD_STATIC_IMAGE_RX   = r"<param name='static_image' value='([^']+)'"
 DASHBOARD_DATE_RX           = r"(\d+/\d+/\d{4})"
-DASHBOARD_DATA_RX           = r"\n([\d,]+)\s+([\d,]+)\s+([\d,]+)"
+DASHBOARD_DATA_RX           = r"\n([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)"
 
 # Functions
 
