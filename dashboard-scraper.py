@@ -14,7 +14,9 @@ import requests
 DASHBOARD_URL               = 'https://here.nd.edu/our-approach/dashboard/'
 DASHBOARD_STATIC_IMAGE_RX   = r"<param name='static_image' value='([^']+)'"
 DASHBOARD_DATE_RX           = r"(\d+/\d+/\d{4})"
-DASHBOARD_DATA_RX           = r"\n([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)"
+#DASHBOARD_DATA_RX           = r"\n([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)"
+DASHBOARD_DAILY_RX           = r"Daily cases reported\s+([\d,]+)"
+DASHBOARD_TOTAL_RX           = r"Positive cases\s+([\d,]+)"
 
 # Functions
 
@@ -41,7 +43,6 @@ def make_timestamp():
     return f'{ctime[0:3]}, {timestamp.day:02d} {ctime[4:7]}' + timestamp.strftime(' %Y %H:%M:%S +0000')
 
 def generate_rss_feed(date, data):
-    total = sum(int(d.replace(',', '')) for d in data[0:3])
     print(f'''<rss version="2.0">
 <channel>
 <title>Notre Dame Covid Dashboard</title>
@@ -50,7 +51,7 @@ def generate_rss_feed(date, data):
 Notre Dame Covid Dashboard
 </description>
 <item>
-<title>Covid Dashboard ({date}): Graduate={data[0]}, Undergraduate={data[1]}, Employee={data[2]}, Total={total}</title>
+<title>Covid Dashboard ({date}): Daily={data[0]} Total={data[1]}</title>
 <author>pbui</author>
 <link>{DASHBOARD_URL}#{''.join([date] + list(data))}</link>
 <pubDate>{make_timestamp()}</pubDate>
@@ -68,7 +69,10 @@ def main():
         image = download_static_image(url, workspace)
         text  = scan_static_image(image, workspace)
         date  = re.findall(DASHBOARD_DATE_RX, open(text).read())[0]
-        data  = re.findall(DASHBOARD_DATA_RX, open(text).read())[0]
+        data  = [
+            re.findall(DASHBOARD_DAILY_RX, open(text).read())[0],
+            re.findall(DASHBOARD_TOTAL_RX, open(text).read())[0],
+        ]
         generate_rss_feed(date, data)
 
 if __name__ == '__main__':
