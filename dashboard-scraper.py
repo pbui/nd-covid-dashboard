@@ -68,8 +68,12 @@ def main():
         url   = extract_static_image_url()
         image = download_static_image(url, workspace)
         text  = scan_static_image(image, workspace)
-        date  = re.findall(DASHBOARD_DATE_RX, open(text).read())[0]
-        data  = [
+        try:
+            date = re.findall(DASHBOARD_DATE_RX, open(text).read())[0]
+        except IndexError:
+            date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%m/%d/%Y')
+
+        data = [
             re.findall(DASHBOARD_DAILY_RX, open(text).read())[0],
             re.findall(DASHBOARD_TOTAL_RX, open(text).read())[0],
         ]
